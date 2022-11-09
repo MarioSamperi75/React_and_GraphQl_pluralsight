@@ -6,8 +6,8 @@ import { Formik, Field, Form } from "formik"
 
 /* ---> Define queries, mutations and fragments here */
 const SESSION =  gql`
-query session {
-  sessions {
+query session ($day: String!) {
+  sessions (day : $day){
     id
     title
     day
@@ -24,9 +24,11 @@ function AllSessionList() {
    return <SessionItem />
 }
 
-const SessionList = () => {
+const SessionList = ({day}) => {
   // execute query and store response json
-  const {loading, data} = useQuery(SESSION);
+  const {loading, data} = useQuery(SESSION, {
+    variables: {day}
+  });
 
   if (loading) { 
     return <p>Loading Session...</p>
