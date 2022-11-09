@@ -1,33 +1,64 @@
 import React, {useState} from "react";  
 import "./style-sessions.css";
+import {gql, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom"
 import { Formik, Field, Form } from "formik"
 
 /* ---> Define queries, mutations and fragments here */
+const SESSION =  gql`
+query session {
+  sessions {
+    id
+    title
+    day
+    room
+    level
+  }
+}
+`;
+
+
 
 function AllSessionList() {
    /* ---> Invoke useQuery hook here to retrieve all sessions and call SessionItem */
    return <SessionItem />
 }
 
-function SessionList () {
-  /* ---> Invoke useQuery hook here to retrieve sessions per day and call SessionItem */
-  return <SessionItem />
+const SessionList = () => {
+  // execute query and store response json
+  const {loading, data} = useQuery(SESSION);
+
+  if (loading) { 
+    return <p>Loading Session...</p>
+  }
+  return data.sessions.map((session) => (
+    <SessionItem 
+      key={session.id}
+      session={{
+          ...session
+      }}
+      />
+  )
+  
+  )
+  
+ 
 }
 
-function SessionItem() {
+function SessionItem(props) {
+  const {id, title, day, room, level} = props.session;
 
   /* ---> Replace hard coded session values with data that you get back from GraphQL server here */
   return (
-    <div key={'id'} className="col-xs-12 col-sm-6" style={{ padding: 5 }}>
+    <div key={{id}} className="col-xs-12 col-sm-6" style={{ padding: 5 }}>
       <div className="panel panel-default">
         <div className="panel-heading">
-          <h3 className="panel-title">{"title"}</h3>
-          <h5>{`Level: `}</h5>
+          <h3 className="panel-title">{title}</h3>
+          <h5>{`Level: ${level}`}</h5>
         </div>
         <div className="panel-body">
-          <h5>{`Day: `}</h5>
-          <h5>{`Room Number: `}</h5>
+          <h5>{`Day: ${day}`}</h5>
+          <h5>{`Room Number: ${room}`}</h5>
           <h5>{`Starts at: `}</h5>
         </div>
         <div className="panel-footer">
