@@ -4,13 +4,15 @@ import {gql, useQuery } from "@apollo/client";
 import { Link } from "react-router-dom"
 import { Formik, Field, Form } from "formik"
 
-/* ---> Define queries, mutations and fragments here */
+/* ---> Define queries, mutations and fragments here 
+added an error to show error handling
+*/
 const SESSION =  gql`
 query session ($day: String!) {
   sessions (day : $day){
     id
     title
-    day
+    dayd 
     room
     level
   }
@@ -30,13 +32,16 @@ if (day==='') {
   day = "Wednesday";
 }
 
-  const {loading, data} = useQuery(SESSION, {
+  const {loading, error, data} = useQuery(SESSION, {
     variables: {day}
   });
 
   if (loading) { 
-    return <p>Loading Session...</p>
-  }
+    return <p>Loading Session...</p>}
+
+  if (error) { 
+    return <p>Det Blev fel!</p>}
+  
   return data.sessions.map((session) => (
     <SessionItem 
       key={session.id}
