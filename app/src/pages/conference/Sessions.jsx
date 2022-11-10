@@ -12,13 +12,16 @@ query session ($day: String!) {
   sessions (day : $day){
     id
     title
-    dayd 
+    day
     room
     level
+    speakers {
+      id
+      name
+    }
   }
 }
 `;
-
 
 
 function AllSessionList() {
@@ -50,14 +53,11 @@ if (day==='') {
       }}
       />
   )
-  
   )
-  
- 
 }
 
 function SessionItem(props) {
-  const {id, title, day, room, level} = props.session;
+  const {id, title, day, room, level, speakers} = props.session;
 
   /* ---> Replace hard coded session values with data that you get back from GraphQL server here */
   return (
@@ -73,6 +73,17 @@ function SessionItem(props) {
           <h5>{`Starts at: `}</h5>
         </div>
         <div className="panel-footer">
+
+          {speakers.map(({id, name})=>(
+            <span key={id} style={{padding:2}}>
+              <Link 
+                className="btn btn-default btn-ng"
+                to={`/conference/speaker/${id}`}
+              >
+                View {name}'s Profile
+              </Link>
+            </span>
+          ))}
         </div>
       </div>
     </div>
