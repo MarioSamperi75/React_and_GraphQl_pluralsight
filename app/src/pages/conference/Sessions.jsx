@@ -7,9 +7,9 @@ import { Formik, Field, Form } from "formik"
 /* ---> Define queries, mutations and fragments here 
 added an error to show error handling
 */
-const SESSION =  gql`
-query session ($day: String!) {
-  sessions (day : $day){
+
+const SESSIONS_ATTRIBUTES = gql`
+  fragment SessionInfo on Session {
     id
     title
     day
@@ -20,7 +20,21 @@ query session ($day: String!) {
       name
     }
   }
+`;
+
+const SESSION =  gql`
+query session ($day: String!) {
+  intro: sessions (day : $day, , level: "Introductory and overview"){
+    ...SessionInfo
+  }
+  intermediate: sessions (day : $day, , level: "Intermediate"){
+    ...SessionInfo
+  } 
+  advanced: sessions (day : $day, , level: "Advanced"){
+    ...SessionInfo
+  }
 }
+${SESSIONS_ATTRIBUTES}
 `;
 
 
@@ -45,15 +59,37 @@ if (day==='') {
   if (error) { 
     return <p>Det Blev fel!</p>}
   
-  return data.sessions.map((session) => (
-    <SessionItem 
-      key={session.id}
-      session={{
-          ...session
-      }}
-      />
-  )
-  )
+  const results = [];
+
+
+  results.push(data.intro.map((session) => (
+      <SessionItem 
+        key={session.id}
+        session={{
+            ...session
+        }}
+        />
+    )));
+
+    results.push(data.intermediate.map((session) => (
+        <SessionItem 
+          key={session.id}
+          session={{
+              ...session
+          }}
+          />
+      ))); 
+
+      results.push(data.advanced.map((session) => (
+          <SessionItem 
+            key={session.id}
+            session={{
+                ...session
+            }}
+            />
+        )));
+
+        return results;
 }
 
 function SessionItem(props) {
