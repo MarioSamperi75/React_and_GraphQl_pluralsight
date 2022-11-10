@@ -12,9 +12,11 @@ const SESSIONS_ATTRIBUTES = gql`
   fragment SessionInfo on Session {
     id
     title
+    startsAt
     day
     room
     level
+    description @include(if: $isDescription)
     speakers {
       id
       name
@@ -23,7 +25,7 @@ const SESSIONS_ATTRIBUTES = gql`
 `;
 
 const SESSION =  gql`
-query session ($day: String!) {
+query session ($day: String!, $isDescription: Boolean!) {
   intro: sessions (day : $day, , level: "Introductory and overview"){
     ...SessionInfo
   }
@@ -45,12 +47,15 @@ function AllSessionList() {
 
 const SessionList = ({day}) => {
   // execute query and store response json
-if (day==='') {
-  day = "Wednesday";
-}
+  if (day==='') {
+    day = "Wednesday";
+  }
+
+  let isDescription = true;
+
 
   const {loading, error, data} = useQuery(SESSION, {
-    variables: {day}
+    variables: {day, isDescription}
   });
 
   if (loading) { 
@@ -93,7 +98,7 @@ if (day==='') {
 }
 
 function SessionItem(props) {
-  const {id, title, day, room, level, speakers} = props.session;
+  const {id, title, startsAt, day, room, level, description, speakers} = props.session;
 
   /* ---> Replace hard coded session values with data that you get back from GraphQL server here */
   return (
@@ -106,7 +111,8 @@ function SessionItem(props) {
         <div className="panel-body">
           <h5>{`Day: ${day}`}</h5>
           <h5>{`Room Number: ${room}`}</h5>
-          <h5>{`Starts at: `}</h5>
+          <h5>{`Starts at: ${startsAt}`}</h5>
+          {description && <h5>{`Description: ${description}`}</h5>}
         </div>
         <div className="panel-footer">
 
