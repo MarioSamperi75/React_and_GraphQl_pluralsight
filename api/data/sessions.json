@@ -3630,6 +3630,41 @@
       "level": "Intermediate",
       "day": "Thursday",
       "id": "814b1f5e-e6df-440b-a91c-df198b5bbed2"
+    },
+    {
+      "title": "My new session",
+      "description": "This is a great session",
+      "level": "Intermedate",
+      "day": "Friday",
+      "id": "31df381c-07a6-4c48-bba6-7450909efcec"
+    },
+    {
+      "title": "My new session",
+      "description": "This is a great session",
+      "level": "Intermedate",
+      "day": "Friday",
+      "id": "39fe0f43-7d0a-4c89-b81a-75a6b49d1bca"
+    },
+    {
+      "title": "PROVA123",
+      "description": "Una prova",
+      "level": "Advanced",
+      "day": "Wednesday",
+      "id": "06a8bc34-8216-40ba-83fe-6a6358d88e5d"
+    },
+    {
+      "title": "PROVA123",
+      "description": "Una prova",
+      "level": "Advanced",
+      "day": "Wednesday",
+      "id": "d8bcc758-6ff2-4ca6-b0ca-6a62a06096c6"
+    },
+    {
+      "title": "FridayProva",
+      "description": "This is a great session",
+      "level": "Intermediate",
+      "day": "Friday",
+      "id": "18136ddc-ce56-4bfa-ac31-e3f113037fdf"
     }
   ]
 }
