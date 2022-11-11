@@ -1942,7 +1942,8 @@
           "name": "Build more agreeable microservices"
         }
       ],
-      "name": "Leslie Bates"
+      "name": "Leslie Bates",
+      "featured": true
     }
   ]
 }
