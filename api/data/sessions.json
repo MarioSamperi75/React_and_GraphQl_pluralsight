@@ -3665,6 +3665,13 @@
       "level": "Intermediate",
       "day": "Friday",
       "id": "18136ddc-ce56-4bfa-ac31-e3f113037fdf"
+    },
+    {
+      "title": "Un'altra session",
+      "description": "Proviamo il  messaggio di risposta",
+      "level": "Advanced",
+      "day": "Friday",
+      "id": "068e93ca-913c-4cf6-b370-60b9a9bfbcab"
     }
   ]
 }
